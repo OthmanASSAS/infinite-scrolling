@@ -8,6 +8,10 @@ export default function useBookSearch(query, pageNumber) {
   const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
+    setBooks([]);
+  }, [query]);
+
+  useEffect(() => {
     setLoading(true);
     setError(false);
     let cancel;
@@ -24,6 +28,7 @@ export default function useBookSearch(query, pageNumber) {
           ];
         });
         setHasMore(res.data.docs.length > 0);
+        setLoading(false)
       })
       .catch((e) => {
         if (axios.isCancel(e)) return;
